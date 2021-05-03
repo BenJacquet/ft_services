@@ -1,0 +1,38 @@
+Démarrer minkube :
+- minikube start --vm-driver=docker
+
+Si ça déconne : 
+- sudo usermod -aG docker $(whoami) && newgrp docker
+- minikube config unset driver
+- minikube start --vm-driver=docker
+
+Lancer le dashboard :
+- minikube dashboard
+
+Installer metallb :
+kubectl edit configmap -n kube-system kube-proxy
+et paramétrer :
+
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+mode: "ipvs"
+ipvs:
+  strictARP: true
+
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.6/manifests/namespace.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.6/manifests/metallb.yaml
+# On first install only
+kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
+
+Paramétrer metallb :
+kubectl apply -f metallb-config.yaml
+
+Lier le CLI Docker au Daemon Docker de la VM créée par minikube : eval $(minikube docker-env)
+
+- Lancer un pod : (exemple) kubectl run "image" --port "port" --image "nom-de-l-image"
+
+- voir les pods/services/deploiements : kubectl get all
+
+- voir les namespaces : kubectl get ns
+
+- voit les pods/services/deploiements d'un namespace : kubect get all -n "nom-du-namespace"

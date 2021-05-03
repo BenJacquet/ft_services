@@ -1,0 +1,8 @@
+Kubernetes:
+    - Glossaire : https://kubernetes.io/fr/docs/reference/glossary/?fundamental=true
+
+Metallb:
+    - Installation : https://metallb.universe.tf/installation/
+    - Configuration : https://metallb.universe.tf/configuration/
+    - Utilisation : https://metallb.universe.tf/usage/
+

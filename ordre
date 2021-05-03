@@ -1,0 +1,3 @@
+- Lancer Minikube
+- Installer et paramétrer metallb
+- Créer son pod nginx et le deployer
